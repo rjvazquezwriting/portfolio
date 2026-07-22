@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricardo Vazquez | Game Writer & Narrative Designer</title>
+  <meta name="description" content="Portfolio of Ricardo Vazquez, an aspiring Game Writer and Narrative Designer focused on story-first interactive experiences, branching dialogue, and playable narrative prototypes." />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=boska@400,500,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #161513;
+      --surface: #1d1b18;
+      --surface-soft: #24211e;
+      --text: #ece7df;
+      --muted: #b4ada3;
+      --line: rgba(241, 236, 228, 0.14);
+      --accent: #65aeb2;
+      --accent-dark: #8ac7ca;
+      --accent-soft: #1d2a2b;
+      --white: #171513;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --max: 1120px;
+      --hud: rgba(101, 174, 178, 0.14);
+      --hud-strong: rgba(101, 174, 178, 0.28);
+      --gold: #d3b16a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Satoshi', Inter, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(101, 174, 178, 0.08), transparent 28%),
+        linear-gradient(180deg, #12110f 0%, #161513 100%);
+      line-height: 1.6;
+      position: relative;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    .container { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+    .skip-link {
+      position: absolute; left: -9999px; top: auto;
+    }
+    .skip-link:focus {
+      left: 1rem; top: 1rem; z-index: 1000; background: var(--accent); color: #f3efea; padding: .75rem 1rem; border-radius: 999px;
+    }
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(22, 21, 19, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: inset 0 -1px 0 var(--hud);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      min-height: 76px;
+    }
+    .brand {
+      font-size: .92rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(101, 174, 178, 0.18);
+    }
+    .nav {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav a {
+      color: var(--muted); padding: .5rem .75rem; border-radius: 999px; font-size: .95rem;
+    }
+    .nav a:hover, .nav a:focus-visible { background: var(--surface-soft); color: var(--text); }
+    .nav a::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: .45rem;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 0 0 1px var(--hud-strong);
+      vertical-align: middle;
+    }
+    .nav a:hover::before, .nav a:focus-visible::before {
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(101, 174, 178, 0.5);
+    }
+    main { display: block; }
+    .hero {
+      padding: 5rem 0 3.5rem;
+    }
+    .hero-inner {
+      display: grid; gap: 1.5rem;
+      padding: 2.25rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+    .hero-inner {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(101, 174, 178, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(101, 174, 178, 0.06) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: 0.28;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.35));
+    }
+    .hero-inner > * { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-block;
+      font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .5rem;
+      text-shadow: 0 0 10px rgba(101, 174, 178, 0.2);
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.08; color: var(--text); }
+    h1 {
+      font-family: 'Boska', Georgia, serif;
+      font-size: clamp(2.2rem, 4vw, 4.1rem);
+      max-width: none;
+      white-space: nowrap;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Boska', Georgia, serif;
+      font-size: clamp(1.9rem, 3vw, 3rem);
+      margin-bottom: .75rem;
+    }
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: .65rem;
+    }
+    p {
+      margin: 0;
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+    .hero-actions {
+      display: flex; gap: .85rem; flex-wrap: wrap; margin-top: .5rem;
+    }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 46px; padding: .9rem 1.15rem; border-radius: 999px;
+      border: 1px solid var(--line); font-weight: 700;
+      background: var(--white); transition: .2s ease;
+    }
+    .button:hover, .button:focus-visible { transform: translateY(-1px); }
+    .button-primary {
+      background: var(--accent); color: #171513; border-color: var(--accent);
+    }
+    .button-primary:hover, .button-primary:focus-visible { background: var(--accent-dark); border-color: var(--accent-dark); }
+    .hero-summary {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem;
+      margin-top: .25rem;
+    }
+    .summary-card {
+      padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: linear-gradient(180deg, rgba(36, 33, 30, 0.96), rgba(29, 42, 43, 0.72));
+    }
+    .summary-card strong {
+      display: block; margin-bottom: .3rem; color: var(--text); font-size: 1rem;
+    }
+    section { padding: 0 0 4rem; }
+    .section-head {
+      display: grid; gap: .75rem; margin-bottom: 1.5rem;
+    }
+    .featured-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.35rem;
+    }
+    .project-card, .about-card, .skills-card, .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .project-card::after, .about-card::after, .skills-card::after, .contact-card::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(101, 174, 178, 0.06);
+      border-radius: calc(var(--radius) - 8px);
+      pointer-events: none;
+    }
+    .project-card {
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .project-top {
+      padding: 1.5rem 1.5rem 1rem;
+      background:
+        radial-gradient(circle at top right, rgba(101, 174, 178, 0.12), transparent 34%),
+        linear-gradient(135deg, #201d1b 0%, #292521 100%);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+    .project-top::after {
+      content: '';
+      position: absolute;
+      left: 1.5rem;
+      right: 1.5rem;
+      bottom: .65rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), rgba(101, 174, 178, 0));
+      opacity: .7;
+    }
+    .project-tag {
+      display: inline-block; margin-bottom: .65rem; font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8ac7ca;
+      text-shadow: 0 0 12px rgba(101, 174, 178, 0.25);
+    }
+    .project-body {
+      padding: 1.4rem 1.5rem 1.5rem; display: grid; gap: 1rem; height: 100%;
+    }
+    .project-body .button { width: fit-content; }
+    .split {
+      display: grid; grid-template-columns: 1.15fr .85fr; gap: 1.35rem;
+    }
+    .about-card, .skills-card, .contact-card { padding: 1.6rem; }
+    .bullet-list {
+      margin: 0; padding-left: 1.1rem;
+    }
+    .bullet-list li {
+      margin: .55rem 0; color: var(--muted);
+    }
+    .contact-links {
+      display: grid; gap: .85rem; margin-top: 1rem;
+    }
+    .contact-links a, .contact-links span {
+      padding: .95rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-soft);
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-links a::before, .contact-links span::before {
+      content: '>';
+      color: var(--gold);
+      margin-right: .6rem;
+      font-weight: 700;
+    }
+    footer {
+      padding: 0 0 3rem; color: var(--muted); text-align: center; font-size: .95rem;
+    }
+    @media (max-width: 900px) {
+      .featured-grid, .split, .hero-summary { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      h1 {
+        white-space: normal;
+      }
+    }
+    @media (max-width: 640px) {
+      .header-inner { flex-direction: column; align-items: flex-start; padding: .9rem 0; }
+      .hero { padding-top: 3.5rem; }
+      .hero-inner, .about-card, .skills-card, .contact-card { padding: 1.25rem; }
+      .project-top, .project-body { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .hero-actions { flex-direction: column; }
+      .button { width: 100%; }
+      .nav { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">Ricardo Vazquez</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#skills">Writing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="hero-inner">
+          <div>
+            <span class="eyebrow">Game Writer · Narrative Designer</span>
+            <h1>Ricardo J Vazquez</h1>
+            <div style="display:inline-flex;align-items:center;gap:.55rem;padding:.4rem .75rem;border:1px solid var(--line);border-radius:999px;background:rgba(29,42,43,.36);color:var(--accent);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;width:fit-content;">Narrative Systems · Player Choice · Worldbuilding</div>
+            <p>I am an aspiring Game Writer and Narrative Designer building story-first interactive work through playable prototypes, branching dialogue, and narrative-focused design. My portfolio highlights projects that aim to show player agency, character voice, worldbuilding, and readable interactive storytelling.</p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:.65rem;margin-top:.35rem;">
+            <span style="display:inline-flex;align-items:center;gap:.45rem;padding:.38rem .7rem;border:1px solid var(--hud-strong);border-radius:999px;background:rgba(29,42,43,.22);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;">Active Portfolio Build</span>
+            <span style="display:inline-flex;align-items:center;gap:.45rem;padding:.38rem .7rem;border:1px solid rgba(211,177,106,.2);border-radius:999px;background:rgba(211,177,106,.08);color:var(--gold);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;">Story-First Design</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#work">View featured work</a>
+            <a class="button" href="#contact">Get in touch</a>
+          </div>
+          <div class="hero-summary">
+            <div class="summary-card">
+              <strong>Focus</strong>
+              <span>Interactive storytelling, branching dialogue, and narrative-focused design.</span>
+            </div>
+            <div class="summary-card">
+              <strong>Portfolio intent</strong>
+              <span>Show player agency, character voice, worldbuilding, and readable story structure.</span>
+            </div>
+            <div class="summary-card">
+              <strong>Background</strong>
+              <span>Transitioning from technical support leadership into game development.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Featured work</div>
+          <h2>Selected narrative projects.</h2>
+          <p>Four selected projects that reflect my interest in character voice, mood, worldbuilding, and interactive storytelling.</p>
+        </div>
+        <div class="featured-grid">
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-tag">Playable narrative pilot</div>
+              <h3>Forever: Rise of Lucian</h3>
+            </div>
+            <div class="project-body">
+              <p>An HTML5-based narrative prototype built to showcase character motivation, early worldbuilding, dramatic framing, and player-facing story momentum inside a compact, review-friendly experience.</p>
+              <a class="button button-primary" href="https://itch.io" target="_blank" rel="noopener noreferrer">View Project</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-tag">Interactive sci-fi narrative</div>
+              <h3>My Name is kAI</h3>
+            </div>
+            <div class="project-body">
+              <p>A short interactive sci-fi narrative centered on mystery, atmosphere, and discovery, designed to foreground voice, pacing, and player curiosity through a tight story structure.</p>
+              <a class="button button-primary" href="https://itch.io" target="_blank" rel="noopener noreferrer">View Project</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-tag">Stylized narrative concept</div>
+              <h3>One Last Fix</h3>
+            </div>
+            <div class="project-body">
+              <p>A stylized project with a hand-drawn identity that suggests playful worldbuilding and an approachable narrative hook, useful for showing tonal flexibility beyond darker fantasy or sci-fi work.</p>
+              <a class="button button-primary" href="https://itch.io" target="_blank" rel="noopener noreferrer">View Project</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-tag">Fantasy action-adventure framing</div>
+              <h3>Echoes of the Forsaken</h3>
+            </div>
+            <div class="project-body">
+              <p>A fantasy project centered on story-first action-adventure framing, highlighting universe building, mythic tone, and the kind of larger-scale narrative identity that supports franchise-minded storytelling.</p>
+              <a class="button button-primary" href="https://itch.io" target="_blank" rel="noopener noreferrer">View Project</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container split">
+        <article class="about-card">
+          <div class="eyebrow">About</div>
+          <h2>Story-first writing with player clarity in mind.</h2>
+          <p>I am a Game Writer and Narrative Designer in transition from technical support leadership into game development, with a focus on interactive storytelling, branching structure, and player-centered communication. My background has shaped the way I think about clarity, empathy, feedback, and how writing can guide players through systems without losing narrative tone.</p>
+        </article>
+        <aside class="skills-card" id="skills">
+          <div class="eyebrow">Writing focus</div>
+          <h2>Core strengths.</h2>
+          <ul class="bullet-list">
+            <li>Dialogue and scene writing that reflects motive, conflict, and tone.</li>
+            <li>Interactive writing that treats choice as part of story design, not just branching for its own sake.</li>
+            <li>Attention to structure, pacing, usability, and the relationship between story and gameplay flow.</li>
+            <li>Dialogue systems, branching scenes, and character-driven choices.</li>
+            <li>Lore, codex-style writing, and in-world narrative framing.</li>
+            <li>Narrative breakdowns that connect writing decisions to player experience.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <article class="contact-card">
+          <div class="eyebrow">Contact</div>
+          <h2>Open to game writing and narrative design opportunities.</h2>
+          <p>This one-page portfolio is organized so text, links, and project details can be updated easily without changing the structure.</p>
+          <div class="contact-links">
+            <span>Email / portfolio links can be updated here</span>
+            <span>Location / availability can be updated here</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Ricardo Vazquez · Game Writer & Narrative Designer</div>
+  </footer>
+</body>
+</html>
