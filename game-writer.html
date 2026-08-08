@@ -329,6 +329,36 @@
       .button { width: 100%; }
       .nav { width: 100%; }
     }
+	  .approach-banner {
+  margin-top: 1.25rem;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(101, 174, 178, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  aspect-ratio: 16 / 6;
+  position: relative;
+}
+
+.approach-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.approach-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 17, 15, 0.04) 0%,
+    rgba(18, 17, 15, 0.16) 100%
+  );
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
@@ -464,7 +494,10 @@ just as an orbital weapon prepares to erase everything below.</p>
           <div class="eyebrow">Approach</div>
           <h3>Writing with player autonomy in mind.</h3>
           <p>I focus on branching dialogue, player-facing storytelling, and interactive narrative structure. My background in support leadership and games journalism shapes how I approach clarity, empathy, feedback, and audience-aware writing.</p>
-        </article>
+          <div class="approach-banner">
+    <img src="approachthumb.png" alt="Narrative flowchart and branching story structure visual">
+  </div>
+		</article>
         <aside class="skills-card" id="skills">
           <div class="eyebrow">Writing focus</div>
           <h3>What I bring to narrative work.</h3>
